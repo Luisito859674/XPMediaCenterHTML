@@ -31,6 +31,8 @@ body{
 #clock{font-weight:600;color:var(--muted);font-size:16px}
 .logo{pointer-events:auto;color:var(--menu-color);font-size:18px;display:flex;align-items:center;gap:10px}
 .logo .bold{font-weight:700}
+.logo-img{width:38px;height:auto;display:block}
+.logo-text{display:flex;align-items:center;gap:8px}
 .logo .winbox{width:28px;height:18px;background:linear-gradient(90deg,#00a2ff,#70d600);border-radius:3px}
 
 .watermark{
