@@ -14,7 +14,22 @@ updateClock();
 
 // Menu navigation
 const items = Array.from(document.querySelectorAll('.menu-item'));
+const selector = document.getElementById('selector');
 let selected = items.findIndex(i=>i.classList.contains('selected')) || 0;
+function updateSelectorPosition(idx){
+  if(!selector) return;
+  const menuWrap = document.querySelector('.menu-wrap');
+  const target = items[idx];
+  const wrapRect = menuWrap.getBoundingClientRect();
+  const targetRect = target.getBoundingClientRect();
+  const top = targetRect.top - wrapRect.top + (targetRect.height/2) - (selector.offsetHeight/2);
+  const width = Math.min(Math.max(targetRect.width + 160, 300), Math.min(menuWrap.clientWidth * 0.8, 460));
+  const leftCenter = targetRect.left - wrapRect.left + (targetRect.width/2);
+  selector.style.width = width + 'px';
+  selector.style.top = top + 'px';
+  selector.style.left = leftCenter + 'px';
+}
+
 function select(idx){
   idx = Math.max(0, Math.min(items.length-1, idx));
   items.forEach((it,i)=>{
@@ -23,7 +38,10 @@ function select(idx){
     if(i===idx) it.scrollIntoView({block:'center',behavior:'smooth'});
   });
   selected = idx;
+  updateSelectorPosition(idx);
 }
+
+window.addEventListener('resize', ()=> updateSelectorPosition(selected));
 
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowDown'){
@@ -48,3 +66,4 @@ items.forEach((it, i)=>{
 
 // ensure initial selection visible
 select(selected);
+
