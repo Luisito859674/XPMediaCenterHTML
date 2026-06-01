@@ -1,15 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="styles.css">
-  <title>Your title</title>
+  <title>XP Media Center - HTML Recreation</title>
 </head>
 <body>
-<center>
-  <h1>Media center</h1>
-  <hr>
-  <p>Welcome to Windows Media Center Html Recration, this is a project that I am doing to practice my html and css skills, I hope you like it.</p>
-  <a href="Videos">Click here to watch a video</a>
-</center>
+  <div class="topbar">
+    <div class="left-controls">
+      <div class="power">⏻</div>
+      <div id="clock">10:20 PM</div>
+    </div>
+    <div class="logo">Media<span class="bold">Center</span><div class="winbox" aria-hidden="true"></div></div>
+  </div>
+
+  <div class="watermark">start</div>
+
+  <main class="menu-wrap" role="application">
+    <ul class="menu" role="menu" id="menu">
+      <li class="menu-item" data-index="0" role="menuitem">Online Spotlight</li>
+      <li class="menu-item" data-index="1" role="menuitem">My Videos</li>
+      <li class="menu-item selected" data-index="2" role="menuitem">My Pictures</li>
+      <li class="menu-item" data-index="3" role="menuitem">My Music</li>
+      <li class="menu-item" data-index="4" role="menuitem">More Programs</li>
+    </ul>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

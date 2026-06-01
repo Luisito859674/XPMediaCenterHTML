@@ -1,14 +1,72 @@
-body {
-  background-color: rgb(0, 105, 224);
+:root{
+  --bg1:#003f8a;
+  --bg2:#0a67c8;
+  --accent:#9ad0ff;
+  --menu-color:rgba(255,255,255,0.9);
+  --muted:rgba(255,255,255,0.55);
 }
-h1 {
-  color: white;
+html,body{
+  height:100%;
+  margin:0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
-p {
-  color: white;
+body{
+  background: radial-gradient(ellipse at bottom left, rgba(0,120,255,0.06), transparent 20%), linear-gradient(180deg,var(--bg2),var(--bg1));
+  color:var(--menu-color);
+  overflow:hidden;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+  position:fixed;
+  left:0;right:0;top:0;
+  pointer-events:none;
+}
+.left-controls{display:flex;gap:12px;align-items:center;pointer-events:auto}
+.power{background:rgba(255,255,255,0.08);padding:8px;border-radius:8px;font-size:18px}
+#clock{font-weight:600;color:var(--muted);font-size:16px}
+.logo{pointer-events:auto;color:var(--menu-color);font-size:18px;display:flex;align-items:center;gap:10px}
+.logo .bold{font-weight:700}
+.logo .winbox{width:28px;height:18px;background:linear-gradient(90deg,#00a2ff,#70d600);border-radius:3px}
+
+.watermark{
+  position:fixed;
+  left:6%;
+  top:28%;
+  font-size:160px;
+  color:rgba(255,255,255,0.06);
+  font-weight:700;
+  pointer-events:none;
+  user-select:none;
 }
 
-a {
-  color: white;
-  background-color: rgb(3, 129, 24);
+.menu-wrap{height:100vh;display:flex;align-items:center;justify-content:center}
+.menu{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:18px;align-items:center}
+.menu-item{
+  font-size:36px;
+  color:var(--muted);
+  transition:all 220ms cubic-bezier(.2,.9,.2,1);
+  cursor:pointer;
+  padding:8px 24px;
+  border-radius:6px;
+  pointer-events:auto;
 }
+.menu-item.selected{
+  color:#ffffff;
+  font-weight:700;
+  transform:scale(1.06);
+  text-shadow:0 6px 24px rgba(0,0,0,0.4),0 0 16px rgba(150,200,255,0.08);
+}
+.menu-item:focus{outline:none;box-shadow:0 0 0 4px rgba(150,200,255,0.06)}
+
+@media (max-width:600px){
+  .watermark{font-size:90px;left:2%;top:22%}
+  .menu-item{font-size:28px}
+}
+
+/* small helper for links in content */
+a{color:#fff}
