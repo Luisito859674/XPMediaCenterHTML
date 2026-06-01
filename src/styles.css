@@ -13,7 +13,11 @@ html,body{
   -moz-osx-font-smoothing:grayscale;
 }
 body{
-  background: radial-gradient(ellipse at bottom left, rgba(0,120,255,0.06), transparent 20%), linear-gradient(180deg,var(--bg2),var(--bg1));
+  background:
+    linear-gradient(180deg, rgba(10,103,200,0.35), rgba(0,63,138,0.6)),
+    url('background.png') center/cover no-repeat,
+    radial-gradient(ellipse at bottom left, rgba(0,120,255,0.06), transparent 20%);
+  background-blend-mode:overlay, normal, normal;
   color:var(--menu-color);
   overflow:hidden;
 }
@@ -47,7 +51,7 @@ body{
 }
 
 .menu-wrap{height:100vh;display:flex;align-items:center;justify-content:center}
-.menu{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:18px;align-items:center}
+.menu{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:18px;align-items:center;position:relative}
 .menu-item{
   font-size:36px;
   color:var(--muted);
@@ -56,12 +60,45 @@ body{
   padding:8px 24px;
   border-radius:6px;
   pointer-events:auto;
+  position:relative;
+  z-index:3;
 }
 .menu-item.selected{
   color:#ffffff;
   font-weight:700;
-  transform:scale(1.06);
-  text-shadow:0 6px 24px rgba(0,0,0,0.4),0 0 16px rgba(150,200,255,0.08);
+  transform:scale(1.03);
+  text-shadow:0 6px 24px rgba(0,0,0,0.4),0 0 16px rgba(150,200,255,0.02);
+}
+.menu-item.selected::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width: min(72vw,460px);
+  max-width:460px;
+  height:56px;
+  background: linear-gradient(180deg,#2aa32a,#0f6e0f);
+  border-radius:8px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.12) inset, 0 6px 18px rgba(0,0,0,0.6);
+  border:2px solid rgba(255,255,255,0.06);
+  z-index:0;
+  pointer-events:none;
+}
+.menu-item.selected::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:28%;
+  transform:translateX(-50%);
+  width: min(68vw,420px);
+  height:16px;
+  border-radius:6px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+  filter:blur(0.6px);
+  z-index:0;
+  opacity:0.5;
+  pointer-events:none;
 }
 .menu-item:focus{outline:none;box-shadow:0 0 0 4px rgba(150,200,255,0.06)}
 
