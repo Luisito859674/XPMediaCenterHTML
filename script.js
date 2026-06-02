@@ -30,8 +30,12 @@ function showPanel(idx, full=false){
     panel.classList.add('preview');
     panel.hidden = false;
   }
-  // when previewing My Videos (index 1) and no videos, prompt to add
-  if(idx===1 && !full){
+}
+
+function openFullPanel(idx){
+  showPanel(idx, true);
+  document.body.classList.add('menu-hidden');
+  if(idx===1){
     const dont = localStorage.getItem('mc_dontask_videos');
     if(videos.length===0 && dont!=='1'){
       setTimeout(()=> openAddVideosModal(),220);
@@ -39,15 +43,11 @@ function showPanel(idx, full=false){
   }
 }
 
-function openFullPanel(idx){
-  showPanel(idx, true);
-  document.body.classList.add('menu-hidden');
-}
-
 function closeFullPanel(){
   // hide any active full panel and restore the menu
   panels.forEach(p=>{ p.classList.remove('active'); p.hidden = true; });
   document.body.classList.remove('menu-hidden');
+  closeAddVideosModal();
   // restore preview for the currently selected menu item
   showPanel(selected, false);
 }
