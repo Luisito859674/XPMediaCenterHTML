@@ -29,6 +29,46 @@
       <li class="menu-item" data-index="3" role="menuitem">My Music</li>
       <li class="menu-item" data-index="4" role="menuitem">More Programs</li>
     </ul>
+    <div class="panels">
+      <section class="panel" id="panel-0" data-index="0" hidden></section>
+      <section class="panel" id="panel-1" data-index="1" hidden>
+        <div class="videos-layout">
+          <div class="videos-left">
+            <h2 class="panel-title">MY VIDEOS</h2>
+            <div class="sort-box">
+              <div class="sort-option"><span class="label">Sort by Name</span><span class="dot selected"></span></div>
+              <div class="sort-option"><span class="label">Sort by Date</span><span class="dot"></span></div>
+            </div>
+          </div>
+          <div class="videos-main">
+            <p class="empty-msg">No videos were found. Either there are no videos, or you are viewing an empty folder.</p>
+            <div class="videos-list" hidden></div>
+          </div>
+        </div>
+
+        <div class="tray">
+          <div class="thumb">
+            <div class="thumb-art"></div>
+            <div class="thumb-time">00:00</div>
+          </div>
+        </div>
+
+        <div class="modal" id="addVideosModal" hidden>
+          <div class="modal-content">
+            <h3>ADD VIDEOS</h3>
+            <p>Do you want to add videos now?</p>
+            <label class="dontask"><input type="checkbox" id="dontAsk"> Don't ask me this again</label>
+            <div class="modal-actions">
+              <button id="addYes" class="btn green">Yes</button>
+              <button id="addNo" class="btn">No</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="panel" id="panel-2" data-index="2" hidden></section>
+      <section class="panel" id="panel-3" data-index="3" hidden></section>
+      <section class="panel" id="panel-4" data-index="4" hidden></section>
+    </div>
   </main>
 
   <script src="script.js"></script>

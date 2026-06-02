@@ -16,6 +16,41 @@ updateClock();
 const items = Array.from(document.querySelectorAll('.menu-item'));
 const selector = document.getElementById('selector');
 let selected = items.findIndex(i=>i.classList.contains('selected')) || 0;
+const panels = Array.from(document.querySelectorAll('.panel'));
+let videos = [];
+
+function showPanel(idx, full=false){
+  panels.forEach(p=>{ p.classList.remove('active','preview'); p.hidden = true; });
+  const panel = panels.find(p=>Number(p.dataset.index)===idx);
+  if(!panel) return;
+  if(full){
+    panel.classList.add('active');
+    panel.hidden = false;
+  } else {
+    panel.classList.add('preview');
+    panel.hidden = false;
+  }
+  // when previewing My Videos (index 1) and no videos, prompt to add
+  if(idx===1 && !full){
+    const dont = localStorage.getItem('mc_dontask_videos');
+    if(videos.length===0 && dont!=='1'){
+      setTimeout(()=> openAddVideosModal(),220);
+    }
+  }
+}
+
+function openFullPanel(idx){
+  showPanel(idx, true);
+  document.body.classList.add('menu-hidden');
+}
+
+function closeFullPanel(){
+  // hide any active full panel and restore the menu
+  panels.forEach(p=>{ p.classList.remove('active'); p.hidden = true; });
+  document.body.classList.remove('menu-hidden');
+  // restore preview for the currently selected menu item
+  showPanel(selected, false);
+}
 function updateSelectorPosition(idx){
   if(!selector) return;
   const menuWrap = document.querySelector('.menu-wrap');
@@ -39,6 +74,7 @@ function select(idx){
   });
   selected = idx;
   updateSelectorPosition(idx);
+  showPanel(idx);
 }
 
 window.addEventListener('resize', ()=> updateSelectorPosition(selected));
@@ -51,19 +87,74 @@ document.addEventListener('keydown', (e)=>{
     select((selected-1+items.length) % items.length);
     e.preventDefault();
   } else if(e.key === 'Enter'){
-    // placeholder action - user can wire real navigation
-    const label = items[selected].textContent.trim();
-    alert('Open: ' + label);
+    openFullPanel(selected);
+  }
+  else if(e.key === 'Escape'){
+    // close full panel and return to menu
+    if(document.querySelector('.panel.active')){
+      closeFullPanel();
+      e.preventDefault();
+    }
   }
 });
 
 items.forEach((it, i)=>{
   it.addEventListener('click', ()=> select(i));
-  it.addEventListener('dblclick', ()=> alert('Open: ' + it.textContent.trim()));
+  it.addEventListener('dblclick', ()=> openFullPanel(i));
   it.addEventListener('mouseover', ()=> select(i));
   it.tabIndex = 0;
 });
 
 // ensure initial selection visible
 select(selected);
+
+// Add Videos modal logic
+const addModal = document.getElementById('addVideosModal');
+const addYes = document.getElementById('addYes');
+const addNo = document.getElementById('addNo');
+const dontAsk = document.getElementById('dontAsk');
+
+function openAddVideosModal(){
+  if(!addModal) return;
+  addModal.hidden = false;
+}
+function closeAddVideosModal(){
+  if(!addModal) return;
+  addModal.hidden = true;
+}
+
+addYes && addYes.addEventListener('click', ()=>{
+  if(dontAsk && dontAsk.checked) localStorage.setItem('mc_dontask_videos','1');
+  // simulate adding a sample video
+  videos.push({title:'Sample Video',duration:'00:25'});
+  renderVideos();
+  closeAddVideosModal();
+});
+addNo && addNo.addEventListener('click', ()=>{
+  if(dontAsk && dontAsk.checked) localStorage.setItem('mc_dontask_videos','1');
+  closeAddVideosModal();
+});
+
+function renderVideos(){
+  const panel = document.querySelector('.panel[data-index="1"]');
+  if(!panel) return;
+  const list = panel.querySelector('.videos-list');
+  const empty = panel.querySelector('.empty-msg');
+  if(videos.length===0){
+    list.hidden = true;
+    empty.hidden = false;
+  } else {
+    empty.hidden = true;
+    list.hidden = false;
+    list.innerHTML = '';
+    videos.forEach(v=>{
+      const el = document.createElement('div');
+      el.className = 'vid-card';
+      el.innerHTML = `<div class="vid-art"></div><div class="vid-meta"><div class="vid-title">${v.title}</div><div class="vid-duration">${v.duration}</div></div>`;
+      list.appendChild(el);
+    });
+  }
+}
+
+renderVideos();
 
